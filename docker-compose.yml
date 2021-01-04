@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  frontend:
+    environment:
+      - CHOKIDAR_USEPOLLING=true # help windows automatically update react
+    stdin_open: true
+    build: 
+      context: . # this where our source code files are
+      dockerfile: Dockerfile.dev 
+    ports:
+      - '3000:3000'
+    volumes:
+      - /app/node-modules
+      - .:/app
+
+  tests:
+    environment:
+      - CHOKIDAR_USEPOLLING=true # help windows automatically update react
+    stdin_open: true
+    build: 
+      context: . # this where our source code files are
+      dockerfile: Dockerfile.dev 
+    volumes:
+      - /app/node-modules
+      - .:/app
+    command: ["npm", "run", "test"]
